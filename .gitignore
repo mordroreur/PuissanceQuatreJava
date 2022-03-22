@@ -1,4 +1,9 @@
 build/
+<<<<<<< HEAD
 compile*
+=======
+compile
+compile.bat
+>>>>>>> d98436a0b4f2afcb8aaf68dd25a505fd9d943485
 .vscode/
 src/.vscode/
