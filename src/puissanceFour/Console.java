@@ -28,6 +28,7 @@ class Console {
         cell = goToDirection(SideEnum.LEFT, cell);
         String s = "";
         CellulePuissance cellCopy = cell;
+        CellulePuissance cellCopy2 = cell;
         while(cellCopy != null)
         {
             s += ANSI_RESET + "|";
@@ -35,7 +36,7 @@ class Console {
                 if(cell.getTeam() != null)
                 {
                     String color = (cell.getTeam().getId() == 1) ? ANSI_RED : ANSI_YELLOW;
-                    s += color + " O " + ANSI_RESET + "|";
+                    s += color + " " + ((cell.getTeam().getId() == 1) ? "@" : "$") + " " + ANSI_RESET + "|";
                 }
                 else
                 {

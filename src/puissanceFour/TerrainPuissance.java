@@ -8,6 +8,7 @@ public class TerrainPuissance {
     private final int sizeY;
     private CellulePuissance[] index;
     private Console console;
+    
 
     public TerrainPuissance(){
         this(7, 6);
@@ -16,10 +17,9 @@ public class TerrainPuissance {
     public TerrainPuissance(int x, int y){
         this.sizeX = x;
         this.sizeY = y;
-
+        
         console = new Console();
         index = new CellulePuissance[this.sizeX];
-
         CellulePuissance[][] tableau = new CellulePuissance[x][y];
         for(int i = 0; i < this.sizeX; i++){
             for(int j = 0; j < this.sizeY; j++){
@@ -44,6 +44,11 @@ public class TerrainPuissance {
             }
             index[i] = tableau[i][this.sizeY-1];
         }
+    }
+
+    public boolean addConditionalDiscs(int column, Team team){
+        if(column > this.sizeY || column < 0) return false;
+        return true;
     }
 
     public boolean addDiscs(int column, Team team){

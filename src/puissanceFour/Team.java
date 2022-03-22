@@ -1,16 +1,16 @@
 package puissanceFour;
 
-class Team {
+public class Team {
     private Color color;
     private int id;
 
-    private Team(int id, double red, double green, double blue)
+    public Team(int id, double red, double green, double blue)
     {
         this.color = new Color(red, green, blue);
         this.id = id;
     }
 
-    private Team(int id, Color color)
+    protected Team(int id, Color color)
     {
         this.id = id;
         this.color = color;
