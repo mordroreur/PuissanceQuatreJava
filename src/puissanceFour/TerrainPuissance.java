@@ -4,6 +4,7 @@ public class TerrainPuissance {
     private final int sizeX;
     private final int sizeY;
     private CellulePuissance[] index;
+    private Console console;
 
     public TerrainPuissance(){
         this(7, 6);
@@ -13,6 +14,7 @@ public class TerrainPuissance {
         this.sizeX = x;
         this.sizeY = y;
 
+        console = new Console();
         index = new CellulePuissance[this.sizeX];
 
         CellulePuissance[][] tableau = new CellulePuissance[x][y];
@@ -41,5 +43,11 @@ public class TerrainPuissance {
         }
     }
 
+    @Override
+    public String toString() {
+        return console.draw(index[0]);
+    }
+
+    
     
 }
