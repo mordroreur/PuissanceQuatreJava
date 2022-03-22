@@ -1,11 +1,11 @@
 
-public class Color {
+class Color {
     private final int MAX = 255; 
     private double red;
     private double green;
     private double blue;
 
-    public Color(double red, double green, double blue)
+    protected Color(double red, double green, double blue)
     {
         if((red < 0 || red > MAX) || (green < 0 || green > MAX) || (blue < 0 || blue > MAX))
         {
@@ -16,19 +16,19 @@ public class Color {
         this.blue = blue;
     }
 
-    public double getBlue() {
+    protected double getBlue() {
         return blue;
     }
 
-    public double getGreen() {
+    protected double getGreen() {
         return green;
     }
 
-    public double getRed() {
+    protected double getRed() {
         return red;
     }
 
-    public double[] getRGB() {
+    protected double[] getRGB() {
         double[] rgb = {red, green, blue};
         return rgb;
     }

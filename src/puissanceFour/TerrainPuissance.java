@@ -1,5 +1,3 @@
-package puissanceFour;
-
 public class TerrainPuissance {
     private int sizeX;
     private int sizeY;
