@@ -59,4 +59,13 @@ class CellulePuissance {
         }
         return value;
     }
+
+    protected CellulePuissance getVoisin(SideEnum where){
+        return nextCases[where.ordinal()];
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
 }
