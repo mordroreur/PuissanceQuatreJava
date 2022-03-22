@@ -23,7 +23,7 @@ class Console {
         return cell;
     }
 
-    protected String draw(CellulePuissance cell){
+    protected String drawColor(CellulePuissance cell){
         cell = goToDirection(SideEnum.UP, cell);
         cell = goToDirection(SideEnum.LEFT, cell);
         String s = "";
@@ -58,4 +58,28 @@ class Console {
         }
         return s;
     }   
+
+    protected String draw(CellulePuissance cell){
+        cell = goToDirection(SideEnum.UP, cell);
+        cell = goToDirection(SideEnum.LEFT, cell);
+        String s = "";
+        CellulePuissance cellCopy = cell;
+        while(cellCopy != null)
+        {
+            while(cell != null){
+                if(cell.getTeam() != null){
+                    s += cell.getTeam().getId() + "|";
+                }
+                else{
+                    s += " |";
+                }
+                cell = cell.getVoisin(SideEnum.RIGHT);
+            }
+            s = s.substring(0, s.length()-1);
+            s += "\n";
+            cellCopy = cellCopy.getVoisin(SideEnum.DOWN);
+            cell = cellCopy;
+        }
+        return s;
+    }
 }
