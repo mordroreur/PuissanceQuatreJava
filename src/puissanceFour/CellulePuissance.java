@@ -1,3 +1,5 @@
+package puissanceFour;
+
 class CellulePuissance {
 
     private CellulePuissance[] nextCases;

@@ -1,3 +1,4 @@
+package puissanceFour;
 
 class Color {
     private final int MAX = 255; 

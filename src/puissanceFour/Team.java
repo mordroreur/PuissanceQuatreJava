@@ -1,3 +1,5 @@
+package puissanceFour;
+
 class Team {
     private Color color;
     private int id;
