@@ -1,5 +1,0 @@
-#!/bin/bash
-
-javac -sourcepath src -d build src/**/*.java
-
-java -cp .:build:**/*.class main.Main
