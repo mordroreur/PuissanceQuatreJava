@@ -1,4 +1,5 @@
 build/
-compi*
+compile
+compile.bat
 .vscode/
 src/.vscode/
