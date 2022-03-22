@@ -1,6 +1,6 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import puissanceFour.Team;
@@ -13,15 +13,21 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         boolean win = false;
+        System.out.println(ter);
         while(!win)
         {
             for (Team team : t) {
                 System.out.println("C'est au joueur " + (team.getId()+1) + " de jouer.\nOu veux-tu jouer ?[1, 7]");
-                int column = sc.nextInt();
+                int column;
+                try{
+                    column = sc.nextInt();
+                }catch (InputMismatchException e){column = -1;sc.nextLine();}
                 while(!ter.addConditionalDiscs(column-1, team))
                 {
                     System.out.println("Colonne invalide!\nOu veux-tu jouer ?[1, 7]");
-                    column = sc.nextInt();
+                    try{
+                        column = sc.nextInt();
+                    }catch (InputMismatchException e){column = -1;sc.nextLine();}
                 }
                 win = ter.addDiscs(column-1, team);
                 System.out.println(ter);

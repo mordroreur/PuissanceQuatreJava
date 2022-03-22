@@ -48,6 +48,14 @@ class Console {
             cellCopy = cellCopy.getVoisin(SideEnum.DOWN);
             cell = cellCopy;
         }
+        int i = 1;
+        s += " ";
+        while(cellCopy2 != null)
+        {
+            s += " " + i + "  ";
+            i++;
+            cellCopy2 = cellCopy2.getVoisin(SideEnum.RIGHT);
+        }
         return s;
     }   
 }
