@@ -1,6 +1,9 @@
 package puissanceFour;
 
 public class TerrainPuissance {
+
+    public final int VALUE_FOR_WIN = 4;
+
     private final int sizeX;
     private final int sizeY;
     private CellulePuissance[] index;
@@ -41,5 +44,14 @@ public class TerrainPuissance {
         }
     }
 
+    public boolean addDiscs(int column, Team team){
+        CellulePuissance temporry = index[column];
+        index[column] = index[column].addDiscs(team);
+        if(temporry.MaxValueWin() < VALUE_FOR_WIN){
+            return false;
+        }else{
+            return true;
+        }
+    }
     
 }
