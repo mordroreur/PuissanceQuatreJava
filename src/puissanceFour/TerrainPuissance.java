@@ -1,3 +1,5 @@
+package puissanceFour;
+
 public class TerrainPuissance {
     private final int sizeX;
     private final int sizeY;
@@ -19,7 +21,7 @@ public class TerrainPuissance {
                 tableau[i][j] = new CellulePuissance();
             }
         }
-        
+
         for(int i = 0; i < this.sizeX; i++){
             for(int j = 0; j < this.sizeY; j++){
                 if(i < x-1){
