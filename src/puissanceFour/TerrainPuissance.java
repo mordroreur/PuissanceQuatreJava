@@ -67,6 +67,14 @@ public class TerrainPuissance {
         }
     }
 
+    public boolean isFull()
+    {
+        for (CellulePuissance cell : index) {
+            if(cell.getTeam() == null) return false;
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {

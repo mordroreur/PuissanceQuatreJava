@@ -31,6 +31,12 @@ public class Main {
                     System.out.println("Le joueur " + (team.getId()+1) + " a gagne!");
                     break;
                 }
+                if(ter.isFull())
+                {
+                    System.out.println("Egalité!");
+                    win = true;
+                    break;
+                }
             }
             ter.save("test.txt");
         }
