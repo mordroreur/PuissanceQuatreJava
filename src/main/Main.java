@@ -7,10 +7,12 @@ import puissanceFour.Team;
 import puissanceFour.TerrainPuissance;
 
 public class Main {
+
+    private static  Scanner sc;
     public static void main(String[] args) {
         TerrainPuissance ter = new TerrainPuissance();
         Team[] t = {new Team(0, 0, 0, 0), new Team(1, 0, 0, 0)};
-
+        sc = new Scanner(System.in);
         
         boolean win = false;
         System.out.println(ter);
@@ -40,15 +42,16 @@ public class Main {
             }
             ter.save("test.txt");
         }
+        sc.close();
     }
 
     static private int ask_column()
     {
-        Scanner sc = new Scanner(System.in);
         try{
             int column = sc.nextInt();
             return column;
         }catch (InputMismatchException e){sc.nextLine(); return -1;}
+        
     }
 
     

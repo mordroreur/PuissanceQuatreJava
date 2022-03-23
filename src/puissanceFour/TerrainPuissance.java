@@ -1,10 +1,7 @@
 package puissanceFour;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+
 
 public class TerrainPuissance {
 
@@ -83,7 +80,7 @@ public class TerrainPuissance {
 
     public void save(String nameFile) {
         try {
-            FileWriter file = new FileWriter("./../save/" + nameFile);
+            FileWriter file = new FileWriter("save" + System.getProperty("file.separator") + nameFile);//new FileWriter("./../save/" + nameFile);
             file.write(this.sizeY + " " + this.sizeX + "\n" + console.draw(index[0]));
             file.close();
         } catch (IOException e) {
