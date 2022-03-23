@@ -1,5 +1,11 @@
 package puissanceFour;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class TerrainPuissance {
 
     public final int VALUE_FOR_WIN = 4;
@@ -47,7 +53,7 @@ public class TerrainPuissance {
     }
 
     public boolean addConditionalDiscs(int column, Team team){
-        if(column > this.sizeY || column < 0) return false;
+        if(column > this.sizeY || column < 0 || index[column].getTeam() != null) return false;
         return true;
     }
 
@@ -61,11 +67,29 @@ public class TerrainPuissance {
         }
     }
 
+    public boolean isFull()
+    {
+        for (CellulePuissance cell : index) {
+            if(cell.getTeam() == null) return false;
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {
-        return console.draw(index[0]);
+        return console.drawColor(index[0]);
     }
 
+    public void save(String nameFile) {
+        try {
+            FileWriter file = new FileWriter("./../save/" + nameFile);
+            file.write(this.sizeY + " " + this.sizeX + "\n" + console.draw(index[0]));
+            file.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
     
 }
