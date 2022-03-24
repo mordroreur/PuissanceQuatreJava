@@ -60,7 +60,7 @@ class Console {
     }   
 
     protected String draw(CellulePuissance cell){
-        cell = goToDirection(SideEnum.UP, cell);
+        cell = goToDirection(SideEnum.DOWN, cell);
         cell = goToDirection(SideEnum.LEFT, cell);
         String s = "";
         CellulePuissance cellCopy = cell;
@@ -68,16 +68,12 @@ class Console {
         {
             while(cell != null){
                 if(cell.getTeam() != null){
-                    s += cell.getTeam().getId() + "|";
+                    s += cell.getTeam().getId() + ":";
                 }
-                else{
-                    s += " |";
-                }
-                cell = cell.getVoisin(SideEnum.RIGHT);
+                cell = cell.getVoisin(SideEnum.UP);
             }
-            s = s.substring(0, s.length()-1);
-            s += "\n";
-            cellCopy = cellCopy.getVoisin(SideEnum.DOWN);
+            s += "!\n";
+            cellCopy = cellCopy.getVoisin(SideEnum.RIGHT);
             cell = cellCopy;
         }
         return s;

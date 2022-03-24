@@ -19,11 +19,13 @@ public class PrincipaleFour {
     private int actualPlayer;
 
     public PrincipaleFour(char c){
-        this.ter = new TerrainPuissance();
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
         this.teams[0] = new Team(0, 0, 0, 0);
         this.teams[1] = new Team(1, 0, 0, 0);
+        this.ter = new TerrainPuissance("test.txt", this.teams);
+        
+        
 
         consoleMode = ('c' == c);
 
