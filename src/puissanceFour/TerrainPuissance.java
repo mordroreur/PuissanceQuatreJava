@@ -1,6 +1,8 @@
 package puissanceFour;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class TerrainPuissance {
@@ -13,6 +15,7 @@ public class TerrainPuissance {
     private Console console;
     
 
+
     public TerrainPuissance(){
         this(7, 6);
     }
@@ -23,6 +26,54 @@ public class TerrainPuissance {
         
         console = new Console();
         index = new CellulePuissance[this.sizeX];
+        CellulePuissance[][] tableau = initCellules(x, y);
+
+        for (int i = 0; i < this.sizeX; i++)
+        {
+            index[i] = tableau[i][this.sizeY-1];
+        }
+    }
+
+    public TerrainPuissance(String loadFile, Team[] teams){
+        try {
+            File F = new File("save" + System.getProperty("file.separator") + loadFile);
+            Scanner sc = new Scanner(F);
+            sc.useDelimiter(":|;|\\n");
+            this.sizeX = Integer.parseInt(sc.next());
+            this.sizeY = Integer.parseInt(sc.next());
+            System.out.println(sizeX + " " + sizeY);
+            sc.next();
+            index = new CellulePuissance[this.sizeX];
+            CellulePuissance[][] tableau = initCellules(this.sizeX , this.sizeY);
+
+            for (int i = 0; i < this.sizeX; i++)
+            {
+                index[i] = tableau[i][this.sizeY-1];
+            }
+            console = new Console();
+
+            int i = 0;
+            while (sc.hasNext())
+            {
+                String next = sc.next();
+                if(next.contains("!"))
+                {
+                    i++;
+                }
+                else{
+                    this.addDiscs(i, teams[Integer.parseInt(next)]);
+                }
+            }
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("File not found!");
+        }
+    }
+
+
+    public CellulePuissance[][] initCellules(int x, int y) {
         CellulePuissance[][] tableau = new CellulePuissance[x][y];
         for(int i = 0; i < this.sizeX; i++){
             for(int j = 0; j < this.sizeY; j++){
@@ -45,8 +96,9 @@ public class TerrainPuissance {
                      tableau[i][j].setVoisin(SideEnum.UP, tableau[i][j-1]);
                 }
             }
-            index[i] = tableau[i][this.sizeY-1];
         }
+        return tableau;
+
     }
 
     public boolean addConditionalDiscs(int column, Team team){
@@ -81,12 +133,13 @@ public class TerrainPuissance {
     public void save(String nameFile) {
         try {
             FileWriter file = new FileWriter("save" + System.getProperty("file.separator") + nameFile);//new FileWriter("./../save/" + nameFile);
-            file.write(this.sizeY + " " + this.sizeX + "\n" + console.draw(index[0]));
+            file.write(this.sizeY + ":" + this.sizeX + ";\n" + console.draw(index[0]));
             file.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
+
     
 }
