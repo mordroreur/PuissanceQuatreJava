@@ -3,10 +3,21 @@ package main;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import graphiqueFour.FrameFour;
 import puissanceFour.Team;
 import puissanceFour.TerrainPuissance;
 
+
+
 public class PrincipaleFour {
+
+    public static int FRAME_CAP = 60;
+
+    private FrameFour frame;
+    private long timer = System.currentTimeMillis();
+    private long lastRenderTime = System.nanoTime();
+    private double renderTime = 1000000000.0/FRAME_CAP;
+    private int framesnb = 0;
 
     private Scanner sc;
 
@@ -29,6 +40,8 @@ public class PrincipaleFour {
 
         if(consoleMode){
             sc = new Scanner(System.in);
+        }else{
+            frame = new FrameFour();
         }
 
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
@@ -42,6 +55,30 @@ public class PrincipaleFour {
     public void nextPlay(){
         if(consoleMode){
             nextPlayConsole();
+        }else{
+            
+            if(System.nanoTime() - lastRenderTime > renderTime) {
+                // drawing a new frame
+                frame.DrawTer(ter);
+                
+                framesnb++;
+                lastRenderTime += renderTime;
+            }else{
+                try {
+                    Thread.sleep((long) ((System.nanoTime() - lastRenderTime)/100000.0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            //every seconde
+            if(System.currentTimeMillis() - timer > 1000) {
+                    timer += 1000;
+                    System.out.println(framesnb );
+                    frame.setFrameNumber(framesnb);
+                    framesnb = 0;
+            } 
+            
         }
     }
 
@@ -73,7 +110,10 @@ public class PrincipaleFour {
         if(consoleMode){
             System.out.println(ter);
             System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
+            sc.close();
+        }else{
+            frame.close();
         }
-        sc.close();
+        
     }
 }
