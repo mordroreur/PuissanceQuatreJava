@@ -1,12 +1,14 @@
 package puissanceFour;
 
-class Color {
-    private final int MAX = 255; 
-    private double red;
-    private double green;
-    private double blue;
+import java.awt.Color;
 
-    protected Color(double red, double green, double blue)
+class ColorFour {
+    private final int MAX = 255; 
+    private float red;
+    private float green;
+    private float blue;
+
+    protected ColorFour(float red, float green, float blue)
     {
         if((red < 0 || red > MAX) || (green < 0 || green > MAX) || (blue < 0 || blue > MAX))
         {
@@ -17,20 +19,25 @@ class Color {
         this.blue = blue;
     }
 
-    protected double getBlue() {
+    protected float getBlue() {
         return blue;
     }
 
-    protected double getGreen() {
+    protected float getGreen() {
         return green;
     }
 
-    protected double getRed() {
+    protected float getRed() {
         return red;
     }
 
-    protected double[] getRGB() {
-        double[] rgb = {red, green, blue};
+    protected float[] getRGB() {
+        float[] rgb = {red, green, blue};
         return rgb;
     }
+
+    public Color getColor(){
+        return new Color((int)(red), (int)(green), (int)(blue));
+    }
+
 }

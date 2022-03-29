@@ -9,6 +9,9 @@ import puissanceFour.TerrainPuissance;
 public class FrameFour extends JFrame{
 
     private PanelFour panel = new PanelFour();
+    private static keyListener keyListener = new keyListener();
+	//private static mouseListener mouseListener = new mouseListener();
+
     
     public FrameFour(PrincipaleFour game){
         
@@ -29,6 +32,10 @@ public class FrameFour extends JFrame{
         this.setContentPane(panel);
 
         panel.setFrame(0);
+        panel.setStape(42);
+
+        keyListener.setGame(game);
+        this.addKeyListener(keyListener);
 		
 		// paint a temporary(splash) screen
 		//stape = 42;
@@ -47,6 +54,11 @@ public class FrameFour extends JFrame{
     public void setFrameNumber(int frames){
         panel.setFrame(frames);
     }
+
+    public void setTer(TerrainPuissance ter){
+        panel.setTer(ter);
+    }
+
 
     public void close(){
         this.dispose();

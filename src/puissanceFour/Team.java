@@ -1,23 +1,23 @@
 package puissanceFour;
 
 public class Team {
-    private Color color;
+    private ColorFour color;
     private int id;
 
-    public Team(int id, double red, double green, double blue)
+    public Team(int id, float red, float green, float blue)
     {
-        this.color = new Color(red, green, blue);
+        this.color = new ColorFour(red, green, blue);
         this.id = id;
     }
 
-    protected Team(int id, Color color)
+    protected Team(int id, ColorFour color)
     {
         this.id = id;
         this.color = color;
     }
 
-    public Color getColor() {
-        return color;
+    public java.awt.Color getColor() {
+        return color.getColor();
     }
 
     public int getId() {

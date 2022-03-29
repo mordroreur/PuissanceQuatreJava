@@ -2,7 +2,7 @@ package puissanceFour;
 
 
 
-class Console {
+public class Console {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -12,9 +12,9 @@ class Console {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-    protected Console(){}
+    public Console(){}
 
-    private CellulePuissance goToDirection(SideEnum dir, CellulePuissance cell)
+    public CellulePuissance goToDirection(SideEnum dir, CellulePuissance cell)
     {
         while(cell.getVoisin(dir) != null)
         {

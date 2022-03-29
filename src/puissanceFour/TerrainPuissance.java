@@ -142,5 +142,15 @@ public class TerrainPuissance {
         }
     }
 
+    public CellulePuissance getLeftLine(){
+        return this.index[0];
+    }
+
+    public int getWidth(){
+        return this.sizeX;
+    }
+    public int getHeight(){
+        return this.sizeY;
+    }
     
 }

@@ -1,6 +1,6 @@
 package puissanceFour;
 
-class CellulePuissance {
+public class CellulePuissance {
 
     private CellulePuissance[] nextCases;
     private Team team;
@@ -77,7 +77,7 @@ class CellulePuissance {
         return value;
     }
 
-    protected CellulePuissance getVoisin(SideEnum where){
+    public CellulePuissance getVoisin(SideEnum where){
         return nextCases[where.ordinal()];
     }
 

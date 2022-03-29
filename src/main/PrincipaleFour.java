@@ -32,12 +32,10 @@ public class PrincipaleFour {
     public PrincipaleFour(char c){
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
-        this.teams[0] = new Team(0, 0, 0, 0);
-        this.teams[1] = new Team(1, 0, 0, 0);
+        this.teams[0] = new Team(0, 255, 0, 0);
+        this.teams[1] = new Team(1, 0, 255, 0);
         //this.ter = new TerrainPuissance("test.txt", this.teams);
         this.ter = new TerrainPuissance();
-        
-        
 
         consoleMode = ('c' == c);
 
@@ -45,6 +43,7 @@ public class PrincipaleFour {
             sc = new Scanner(System.in);
         }else{
             frame = new FrameFour(this);
+            frame.setTer(this.ter);
         }
 
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
@@ -104,6 +103,15 @@ public class PrincipaleFour {
         ter.save("test.txt");
     }
 
+
+    public void PlaceGraphics(int column){
+        //System.out.println(column);
+        actualPlayer = (actualPlayer+1)%this.nbPlayer;
+        if(ter.addConditionalDiscs(column-1, teams[actualPlayer])){
+            isWin = ter.addDiscs(column-1, teams[actualPlayer]);
+            ter.save("test.txt");
+        }
+    }
 
     private int ask_column()
     {
