@@ -34,19 +34,25 @@ public class PrincipaleFour {
         this.teams = new Team[this.nbPlayer];
         this.teams[0] = new Team(0, 255, 0, 0);
         this.teams[1] = new Team(1, 0, 255, 0);
-        //this.ter = new TerrainPuissance("test.txt", this.teams);
-        this.ter = new TerrainPuissance();
 
         consoleMode = ('c' == c);
+        actualPlayer = (Math.random() < 0.5)? 1 : 0;
+        this.ter = new TerrainPuissance();
 
         if(consoleMode){
             sc = new Scanner(System.in);
+            System.out.println("Voulez vous recharger la dérnière parti ? (O/N)");
+            String answer = sc.nextLine();
+            if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
+                this.ter = new TerrainPuissance("save.txt", this.teams);
+                actualPlayer = this.ter.turnOfWho();
+            }
         }else{
             frame = new FrameFour(this);
             frame.setTer(this.ter);
         }
 
-        actualPlayer = (Math.random() < 0.5)? 1 : 0;
+        
         isWin = false;
     }
 
@@ -100,7 +106,7 @@ public class PrincipaleFour {
             column = ask_column();
         }
         isWin = ter.addDiscs(column-1, teams[actualPlayer]);
-        ter.save("test.txt");
+        ter.save("save.txt");
     }
 
 

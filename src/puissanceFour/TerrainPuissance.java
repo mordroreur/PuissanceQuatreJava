@@ -102,6 +102,31 @@ public class TerrainPuissance {
 
     }
 
+    public int turnOfWho()
+    {
+        int[] count = {0, 0};
+        for (int i = 0 ; i < index.length ; i++)
+        {   
+            CellulePuissance cell = index[i];
+            while(cell != null && cell.getTeam() != null)
+            {
+                count[cell.getTeam().getId()]++;
+                cell = cell.getVoisin(SideEnum.DOWN);
+            }
+        }
+
+        if (count[0] > count[1]){
+            return 1;
+        }else if (count[0] < count[1]){
+            return 0;
+        }else {
+            return (Math.random() < 0.5)? 1 : 0;
+        }
+            
+
+
+    }
+
     public boolean addConditionalDiscs(int column, Team team){
         if(column > this.sizeY || column < 0 || index[column].getTeam() != null) return false;
         return true;
