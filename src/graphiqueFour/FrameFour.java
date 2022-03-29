@@ -3,27 +3,33 @@ package graphiqueFour;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
+import main.PrincipaleFour;
 import puissanceFour.TerrainPuissance;
 
 public class FrameFour extends JFrame{
 
-    private int framesnb;
+    private PanelFour panel = new PanelFour();
     
-    public FrameFour(){
+    public FrameFour(PrincipaleFour game){
         
         // creating frame
-		this.setTitle("F****** window");
+		this.setTitle("Connect four");
 		this.setVisible(true);
 		this.setResizable(true);
         this.setPreferredSize(new Dimension(1300,780));
-        this.setDefaultCloseOperation(FrameFour.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(FrameFour.EXIT_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                game.forceEnd();
+            }
+        });
+
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setContentPane(panel);
 
-
-        this.framesnb = 0;
-
-		//this.setContentPane(panel);
+        panel.setFrame(0);
+		
 		// paint a temporary(splash) screen
 		//stape = 42;
 		//panel.repaint();
@@ -34,15 +40,15 @@ public class FrameFour extends JFrame{
     }
 
     public void DrawTer(TerrainPuissance ter){
-        //System.out.println("pas fait!!!!");
+        panel.revalidate();
+        panel.repaint();
     }
 
     public void setFrameNumber(int frames){
-        this.framesnb = frames;
+        panel.setFrame(frames);
     }
 
     public void close(){
-        System.out.println(framesnb); // inutile juste pour que se soit plus un warning unused
         this.dispose();
     }
 }

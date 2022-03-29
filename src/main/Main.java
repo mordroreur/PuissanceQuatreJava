@@ -10,6 +10,7 @@ public class Main {
         while(!Game.isWin()){
             Game.nextPlay();
         }
+
         Game.close();
         
     }

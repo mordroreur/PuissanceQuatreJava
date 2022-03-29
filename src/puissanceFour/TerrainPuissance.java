@@ -56,16 +56,17 @@ public class TerrainPuissance {
             while (sc.hasNext())
             {
                 String next = sc.next();
-                if(next.contains("!"))
+                if(next.contains("!")) // ISSUE : change to | to make it work on my computer
                 {
                     i++;
                 }
                 else{
+                    System.out.println(next);
                     this.addDiscs(i, teams[Integer.parseInt(next)]);
                 }
             }
             
-            
+            sc.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("File not found!");

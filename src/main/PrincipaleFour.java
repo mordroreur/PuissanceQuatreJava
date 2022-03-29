@@ -34,7 +34,8 @@ public class PrincipaleFour {
         this.teams = new Team[this.nbPlayer];
         this.teams[0] = new Team(0, 0, 0, 0);
         this.teams[1] = new Team(1, 0, 0, 0);
-        this.ter = new TerrainPuissance("test.txt", this.teams);
+        //this.ter = new TerrainPuissance("test.txt", this.teams);
+        this.ter = new TerrainPuissance();
         
         
 
@@ -43,7 +44,7 @@ public class PrincipaleFour {
         if(consoleMode){
             sc = new Scanner(System.in);
         }else{
-            frame = new FrameFour();
+            frame = new FrameFour(this);
         }
 
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
@@ -52,6 +53,11 @@ public class PrincipaleFour {
 
     public boolean isWin(){
         return isWin;
+    }
+
+    public void forceEnd(){
+        isWin = true;
+        actualPlayer = -1;
     }
 
     public void nextPlay(){
@@ -76,7 +82,7 @@ public class PrincipaleFour {
             //every seconde
             if(System.currentTimeMillis() - timer > 1000) {
                     timer += 1000;
-                    System.out.println(framesnb );
+                    //System.out.println(framesnb );
                     frame.setFrameNumber(framesnb);
                     framesnb = 0;
             } 
