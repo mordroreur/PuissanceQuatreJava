@@ -2,12 +2,23 @@ package puissanceFour;
 
 public class MinMax {
 
-    private static float sum(float[] t)
+    private static float min(float[] t)
     {
-        float s = 0;
-        for (int i = 0; i < t.length; i++)
+        float s = t[0];
+        for (int i = 1; i < t.length; i++)
         {
-            s += t[i];
+            if (s > t[i]) s = t[i];
+        }
+
+        return s;
+    }
+
+    private static float max(float[] t)
+    {
+        float s = t[0];
+        for (int i = 1; i < t.length; i++)
+        {
+            if (s < t[i]) s = t[i];
         }
 
         return s;
@@ -33,22 +44,22 @@ public class MinMax {
 
 
             if(play == ourTeam && Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, other)){
-                result[i]+=3;
+                result[i]+=1.0*((float)profondeur/orginalProfondeur);
             }
             else if(Tcopy.addConditionalDiscs(i, play) && Tcopy.addDiscs(i, play))
             {
                 if(play == ourTeam)
                 {
-                    result[i]++;
+                    result[i]+=1.0*((float)profondeur/orginalProfondeur);
                 }
                 else
                 {
-                    result[i]-=2;
+                    result[i]-=2.0*((float)profondeur/orginalProfondeur);
                 }
             }
             else{
-                if(ourTeam == play){result[i] += (float)sum(simulate(ourTeam, other, other, Tcopy, profondeur-1, orginalProfondeur))/Tcopy.getWidth();}
-                else {result[i] += (float)sum(simulate(ourTeam, other, ourTeam, Tcopy, profondeur-1, orginalProfondeur))/Tcopy.getWidth();}
+                if(ourTeam == play){result[i] += (float)min(simulate(ourTeam, other, other, Tcopy, profondeur-1, orginalProfondeur));}
+                else {result[i] += (float)max(simulate(ourTeam, other, ourTeam, Tcopy, profondeur-1, orginalProfondeur));}
                 
             }
         }   
@@ -60,13 +71,6 @@ public class MinMax {
     public static int whereToPlay(Team ourTeam, Team other, TerrainPuissance T)
     {
         float[] result = simulate(ourTeam, other, ourTeam, T, 7, 7);
-
-        /*String toPrint = "";
-        for (float f : result) {
-            toPrint += f + "|";
-        }
-        System.out.println(toPrint);*/
-
 
         float max = result[0];
         int maxI = 0;
