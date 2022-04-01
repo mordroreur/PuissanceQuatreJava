@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import graphiqueFour.FrameFour;
+import puissanceFour.MinMax;
 import puissanceFour.Team;
 import puissanceFour.TerrainPuissance;
 
@@ -32,8 +33,8 @@ public class PrincipaleFour {
     public PrincipaleFour(char c){
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
-        this.teams[0] = new Team(0, 255, 0, 0);
-        this.teams[1] = new Team(1, 0, 255, 0);
+        this.teams[0] = new Team(0, 255, 0, 0, false);
+        this.teams[1] = new Team(1, 0, 255, 0, true);
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
@@ -98,8 +99,13 @@ public class PrincipaleFour {
     public void nextPlayConsole(){
         actualPlayer = (actualPlayer+1)%this.nbPlayer;
         System.out.println(ter);
-        System.out.println("C'est au joueur " + (actualPlayer+1) + " de jouer.\nOu veux-tu jouer ?[1, 7]");
-        int column = ask_column();
+        if(!teams[actualPlayer].isACpu())System.out.println("C'est au joueur " + (actualPlayer+1) + " de jouer.\nOu veux-tu jouer ?[1, 7]");
+        else System.out.println("L'ordinateur joue :");
+        int column;
+        
+        if(!teams[actualPlayer].isACpu()) {column = ask_column();}
+        else {column = MinMax.whereToPlay(teams[1], teams[0], ter)+1;};
+
         while(!ter.addConditionalDiscs(column-1, teams[actualPlayer]))
         {
             System.out.println("Colonne invalide!\nOu veux-tu jouer ?[1, 7]");

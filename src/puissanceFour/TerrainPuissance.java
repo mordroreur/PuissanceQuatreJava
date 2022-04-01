@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javafx.geometry.Side;
+
 
 public class TerrainPuissance {
 
@@ -142,6 +144,16 @@ public class TerrainPuissance {
         }
     }
 
+    public boolean testWin(int column, Team team){
+        boolean result = this.addDiscs(column, team);
+        if (index[column].getTeam() != null){ index[column].removeDiscs(); }
+        else {
+            index[column] = index[column].getVoisin(SideEnum.DOWN);
+            index[column].removeDiscs();
+        }
+        return result;
+    }
+
     public boolean isFull()
     {
         for (CellulePuissance cell : index) {
@@ -165,6 +177,26 @@ public class TerrainPuissance {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public TerrainPuissance copy()
+    {
+        TerrainPuissance T = new TerrainPuissance(this.sizeX, this.sizeY);
+        CellulePuissance cell = console.goToDirection(SideEnum.DOWN, index[0]);
+
+        for (int i = 0; i < this.sizeX ; i++){
+            CellulePuissance cellCopy = cell;
+            while(cell.getVoisin(SideEnum.UP) != null && cell.getTeam() != null)
+            {
+                
+                T.addDiscs(i, cell.getTeam());
+                cell = cell.getVoisin(SideEnum.UP);
+            }
+            cell = cellCopy.getVoisin(SideEnum.RIGHT);
+        }
+
+
+        return T;
     }
 
     public CellulePuissance getLeftLine(){

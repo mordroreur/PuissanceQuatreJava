@@ -30,7 +30,7 @@ public class keyListener implements KeyListener{
                 case('2') : game.PlaceGraphics(2); break; 
                 case('"') : game.PlaceGraphics(3); break;
                 case('3') : game.PlaceGraphics(3); break; 
-                case('\'') : game.PlaceGraphics(4); break;
+                case('\''): game.PlaceGraphics(4); break;
                 case('4') : game.PlaceGraphics(4); break; 
                 case('(') : game.PlaceGraphics(5); break;
                 case('5') : game.PlaceGraphics(5); break; 

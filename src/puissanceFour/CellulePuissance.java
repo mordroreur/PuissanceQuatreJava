@@ -29,6 +29,10 @@ public class CellulePuissance {
         return nextCases[SideEnum.UP.ordinal()];
     }
 
+    protected void removeDiscs(){
+        this.team = null;
+    }
+
     protected int MaxValueWin(){
         int[] cross = {1, 1, 1, 1};
         //int NEtoSW = 1;
