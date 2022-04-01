@@ -27,8 +27,10 @@ public class PrincipaleFour {
     private boolean consoleMode;
     private boolean isWin;
     private int nbPlayer;
+    private int turn;
 
     private int actualPlayer;
+    private boolean draw;
 
     public PrincipaleFour(char c){
         this.nbPlayer = 2;
@@ -53,8 +55,9 @@ public class PrincipaleFour {
             frame.setTer(this.ter);
         }
 
-        
+        turn = 0;
         isWin = false;
+        draw = false;
     }
 
     public boolean isWin(){
@@ -67,6 +70,7 @@ public class PrincipaleFour {
     }
 
     public void nextPlay(){
+        
         if(consoleMode){
             nextPlayConsole();
         }else{
@@ -94,17 +98,19 @@ public class PrincipaleFour {
             } 
             
         }
+        turn++;
     }
 
     public void nextPlayConsole(){
         actualPlayer = (actualPlayer+1)%this.nbPlayer;
+        
         System.out.println(ter);
         if(!teams[actualPlayer].isACpu())System.out.println("C'est au joueur " + (actualPlayer+1) + " de jouer.\nOu veux-tu jouer ?[1, 7]");
         else System.out.println("L'ordinateur joue :");
         int column;
         
         if(!teams[actualPlayer].isACpu()) {column = ask_column();}
-        else {column = MinMax.whereToPlay(teams[1], teams[0], ter)+1;};
+        else {column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;};
 
         while(!ter.addConditionalDiscs(column-1, teams[actualPlayer]))
         {
@@ -112,6 +118,7 @@ public class PrincipaleFour {
             column = ask_column();
         }
         isWin = ter.addDiscs(column-1, teams[actualPlayer]);
+        if(!isWin && ter.isFull()) {draw = true; isWin = true;}
         ter.save("save.txt");
     }
 
@@ -137,7 +144,10 @@ public class PrincipaleFour {
     public void close(){
         if(consoleMode){
             System.out.println(ter);
-            System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
+            if(!draw)    
+                System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
+            else
+                System.out.println("Egalite !");
             sc.close();
         }else{
             frame.close();

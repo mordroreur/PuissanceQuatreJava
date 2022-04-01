@@ -144,13 +144,52 @@ public class TerrainPuissance {
         }
     }
 
-    public boolean testWin(int column, Team team){
-        boolean result = this.addDiscs(column, team);
+    public boolean addDiscs(int column, Team team, int nbrToWin){
+        CellulePuissance temporry = index[column];
+        index[column] = index[column].addDiscs(team);
+        if(temporry.MaxValueWin() < nbrToWin){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void removeDiscs(int column)
+    {
         if (index[column].getTeam() != null){ index[column].removeDiscs(); }
         else {
             index[column] = index[column].getVoisin(SideEnum.DOWN);
             index[column].removeDiscs();
         }
+    }
+
+    public boolean testWin(int column, Team team, Team team2, int nbrToWin){
+        if(!addConditionalDiscs(column, team)) return false;
+        this.addDiscs(column, team);
+        if(!addConditionalDiscs(column, team2)) return false;
+        boolean result = this.addDiscs(column, team2, nbrToWin);
+        
+        removeDiscs(column);
+        removeDiscs(column);
+        return result;
+    }
+
+    public boolean testWin(int column, Team team, int nbrToWin){
+        boolean result = false;
+        CellulePuissance temporry = index[column];
+        index[column] = index[column].addDiscs(team);
+        if(temporry.MaxValueWin() < nbrToWin){
+            result = false;
+        }else{
+            result = true;
+        }
+        removeDiscs(column);
+        return result;
+    }
+
+    public boolean testWin(int column, Team team){
+        boolean result = this.addDiscs(column, team);
+        removeDiscs(column);
         return result;
     }
 
