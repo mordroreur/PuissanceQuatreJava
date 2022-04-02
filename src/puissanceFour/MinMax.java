@@ -36,7 +36,7 @@ public class MinMax {
         for (int i = 0; i < T.getWidth(); i++)
         {   
             TerrainPuissance Tcopy = T.copy();
-            if(!T.addConditionalDiscs(i, play) && profondeur == orginalProfondeur)
+            if(!T.addConditionalDiscs(i) && profondeur == orginalProfondeur)
             {
                 result[i] -= 10;
                 continue;
@@ -45,7 +45,7 @@ public class MinMax {
             if(Tcopy.testWin(i, ourTeam, other, 4)){result[i] -= 2;}
 
             
-            if(Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, play, 3))
+            if(Tcopy.addConditionalDiscs(i) && Tcopy.testWin(i, play, 3))
             {
                 if(play == ourTeam)
                 {
@@ -59,16 +59,16 @@ public class MinMax {
                 {
                     result[i]-=1.5;
                 }
-            }else if(play == ourTeam && Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, other, 3))
+            }else if(play == ourTeam && Tcopy.addConditionalDiscs(i) && Tcopy.testWin(i, other, 3))
             {
                 result[i]+=1.5;
             }
                 
-            if(play == ourTeam && Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, other)){
+            if(play == ourTeam && Tcopy.addConditionalDiscs(i) && Tcopy.testWin(i, other)){
                 if(profondeur > 5) System.out.println(i);
                 result[i] = (int)4.0;
             }
-            else if(Tcopy.addConditionalDiscs(i, play) && Tcopy.addDiscs(i, play))
+            else if(Tcopy.addConditionalDiscs(i) && Tcopy.addDiscs(i, play))
             {
                 if(play == ourTeam)
                 {

@@ -4,8 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import javafx.geometry.Side;
-
 
 public class TerrainPuissance {
 
@@ -129,7 +127,7 @@ public class TerrainPuissance {
 
     }
 
-    public boolean addConditionalDiscs(int column, Team team){
+    public boolean addConditionalDiscs(int column){
         if(column > this.sizeY || column < 0 || index[column].getTeam() != null) return false;
         return true;
     }
@@ -164,9 +162,9 @@ public class TerrainPuissance {
     }
 
     public boolean testWin(int column, Team team, Team team2, int nbrToWin){
-        if(!addConditionalDiscs(column, team)) return false;
+        if(!addConditionalDiscs(column)) return false;
         this.addDiscs(column, team);
-        if(!addConditionalDiscs(column, team2)) return false;
+        if(!addConditionalDiscs(column)) return false;
         boolean result = this.addDiscs(column, team2, nbrToWin);
         
         removeDiscs(column);
