@@ -40,7 +40,7 @@ public class PrincipaleFour {
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
-        //actualPlayer = 0;
+        actualPlayer = 0;
         this.ter = new TerrainPuissance();
 
         if(consoleMode){
@@ -99,16 +99,14 @@ public class PrincipaleFour {
                 // drawing a new frame
                 frame.DrawTer(ter);
                 
-
                 int tmp = (actualPlayer+1)%this.nbPlayer;
                 if(teams[tmp].isACpu()) {
                     actualPlayer = (actualPlayer+1)%this.nbPlayer;
                     int column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;
                     isWin = ter.addDiscs(column-1, teams[actualPlayer]);
-                    if(!isWin && ter.isFull()) {draw = true; isWin = true;}
-                    if(!isWin && !draw) ter.save("save.txt");
                 }
-
+                if(!isWin && ter.isFull()) {draw = true; isWin = true;}
+                if(!isWin && !draw) ter.save("save.txt");
                 framesnb++;
                 lastRenderTime += renderTime;
             }else{

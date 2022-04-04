@@ -112,12 +112,13 @@ public class MinMax {
         float[] result = simulate(ourTeam, other, ourTeam, T, profondeur, profondeur, turn);
 
         //print(result);
+        int center = (int)((float)T.getWidth()/2);
 
         float max = result[0];
         int maxI = 0;
         for (int i = 1; i < result.length ; i++)
         {
-            if(result[i] > max)
+            if(result[i] > max || (result[i] == max && Math.abs(maxI - center) > Math.abs(i - center)))
             {
                 max = result[i];
                 maxI = i;
