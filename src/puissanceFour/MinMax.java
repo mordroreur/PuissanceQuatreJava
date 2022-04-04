@@ -36,14 +36,13 @@ public class MinMax {
         for (int i = 0; i < T.getWidth(); i++)
         {   
             TerrainPuissance Tcopy = T.copy();
-            if(!T.addConditionalDiscs(i, play) && profondeur == orginalProfondeur)
+            if(!T.addConditionalDiscs(i) && profondeur == orginalProfondeur)
             {
                 result[i] = -10;
                 continue;
             }  
-            
-                
-            if(Tcopy.addConditionalDiscs(i, play) && Tcopy.addDiscs(i, play))
+             
+            if(Tcopy.addConditionalDiscs(i) && Tcopy.addDiscs(i, play))
             {
                 if(play == ourTeam)
                 {

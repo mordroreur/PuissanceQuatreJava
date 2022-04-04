@@ -36,24 +36,20 @@ public class PrincipaleFour {
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
         this.teams[0] = new Team(0, 255, 0, 0, false);
-        this.teams[1] = new Team(1, 0, 255, 0, true);
+        this.teams[1] = new Team(1, 0, 255, 0, false);
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
-        actualPlayer = 0;
+        //actualPlayer = 0;
         this.ter = new TerrainPuissance();
 
         if(consoleMode){
             sc = new Scanner(System.in);
-            System.out.println("Voulez vous recharger la dérnière parti ? (O/N)");
-            String answer = sc.nextLine();
-            if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
-                this.ter = new TerrainPuissance("save.txt", this.teams);
-                actualPlayer = this.ter.turnOfWho();
-            }
         }else{
             frame = new FrameFour(this);
             frame.setTer(this.ter);
+            frame.setAll(this);
+            frame.setnewState(42);
         }
 
         turn = 0;
@@ -61,7 +57,30 @@ public class PrincipaleFour {
         draw = false;
     }
 
+    public void askLoad(){
+        System.out.println("Voulez vous recharger la dérnière parti ? (O/N)");
+        String answer = sc.nextLine();
+        if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
+            this.ter = new TerrainPuissance("save.txt", this.teams);
+            actualPlayer = this.ter.turnOfWho();
+        }
+    }
+
     public boolean isWin(){
+        if(isWin){
+            if(!consoleMode){
+                consoleMode = true;
+                frame.close();
+            }
+
+            System.out.println(ter);
+            if(!draw)    
+                System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
+            else
+                System.out.println("Egalite !");
+        }
+
+
         return isWin;
     }
 
@@ -80,6 +99,14 @@ public class PrincipaleFour {
                 // drawing a new frame
                 frame.DrawTer(ter);
                 
+
+                int tmp = (actualPlayer+1)%this.nbPlayer;
+                if(teams[tmp].isACpu()) {
+                    actualPlayer = (actualPlayer+1)%this.nbPlayer;
+                    int column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;
+                    isWin = ter.addDiscs(column-1, teams[actualPlayer]);
+                }
+
                 framesnb++;
                 lastRenderTime += renderTime;
             }else{
@@ -113,7 +140,7 @@ public class PrincipaleFour {
         if(!teams[actualPlayer].isACpu()) {column = ask_column();}
         else {column = MinMax.whereToPlay(teams[actualPlayer], teams[(actualPlayer+1)%this.nbPlayer], ter, turn)+1;};
 
-        while(!ter.addConditionalDiscs(column-1, teams[actualPlayer]))
+        while(!ter.addConditionalDiscs(column-1))
         {
             System.out.println("Colonne invalide!\nOu veux-tu jouer ?[1, 7]");
             column = ask_column();
@@ -127,7 +154,7 @@ public class PrincipaleFour {
     public void PlaceGraphics(int column){
         //System.out.println(column);
         actualPlayer = (actualPlayer+1)%this.nbPlayer;
-        if(ter.addConditionalDiscs(column-1, teams[actualPlayer])){
+        if(ter.addConditionalDiscs(column-1)){
             isWin = ter.addDiscs(column-1, teams[actualPlayer]);
             ter.save("test.txt");
         }
@@ -143,16 +170,51 @@ public class PrincipaleFour {
     }
 
     public void close(){
-        if(consoleMode){
-            System.out.println(ter);
-            if(!draw)    
-                System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
-            else
-                System.out.println("Egalite !");
-            sc.close();
-        }else{
-            frame.close();
-        }
+        sc.close();
         
+    }
+
+    public Team getPlayingTeam() {
+        return teams[(actualPlayer+1)%this.nbPlayer];
+    }
+
+    public TerrainPuissance getTer(){
+        return ter;
+    }
+
+    public void askChangeMode() {
+        System.out.println("Voulez vous ouvrir la version graphique ? (O/N)");
+        String answer = sc.nextLine();
+        if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
+            frame = new FrameFour(this);
+            frame.setTer(this.ter);
+            frame.setAll(this);
+            frame.setnewState(42);
+            consoleMode = !consoleMode;
+        }
+    }
+
+    public boolean askNewParti() {
+        System.out.println("Voulez vous jouer une nouvelle parti ? (O/N)");
+        String answer = sc.nextLine();
+        return (answer.equals("O") || answer.equals("o") || answer.equals("0"));
+    }
+
+    public void askSetComputer() {
+        System.out.println("Voulez vous jouer contre une IA ? (O/N)");
+        String answer = sc.nextLine();
+        if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
+            this.teams[1] = new Team(1, 0, 255, 0, true);
+        }
+    }
+
+    public void resetTerrain() {
+
+        actualPlayer = (Math.random() < 0.5)? 1 : 0;
+        this.ter = new TerrainPuissance();
+        turn = 0;
+        isWin = false;
+        draw = false;
+
     }
 }
