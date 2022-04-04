@@ -3,6 +3,7 @@ package graphiqueFour;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
+import java.awt.MouseInfo;
 import main.PrincipaleFour;
 import puissanceFour.TerrainPuissance;
 
@@ -10,8 +11,9 @@ public class FrameFour extends JFrame{
 
     private PanelFour panel = new PanelFour();
     private static keyListener keyListener = new keyListener();
-	//private static mouseListener mouseListener = new mouseListener();
+	private static mouseListener mouseListener = new mouseListener();
 
+    private PrincipaleFour the_game;
     
     public FrameFour(PrincipaleFour game){
         
@@ -27,12 +29,14 @@ public class FrameFour extends JFrame{
             }
         });
 
+        the_game = game;
+
         this.pack();
         this.setLocationRelativeTo(null);
         this.setContentPane(panel);
 
         panel.setFrame(0);
-        panel.setStape(42);
+        panel.setStape(0);
 
         keyListener.setGame(game);
         this.addKeyListener(keyListener);
@@ -42,13 +46,23 @@ public class FrameFour extends JFrame{
 		//panel.repaint();
 		// add the listener to the frame
 		//this.addKeyListener(keyListener);
-		//this.addMouseListener(mouseListener);
+		this.addMouseListener(mouseListener);
 		//this.addMouseWheelListener(wheelListerne);
     }
 
     public void DrawTer(TerrainPuissance ter){
         panel.revalidate();
         panel.repaint();
+        if(mouseListener.isLeftPressed()){
+            mouseListener.setClickUsed();
+            int column = (int)(((float)(MouseInfo.getPointerInfo().getLocation().x-getLocationOnScreen().x) )/((float)(this.getWidth())/(float)(ter.getWidth())));
+            if(the_game.getTer().addConditionalDiscs(column)){
+                the_game.PlaceGraphics(column+1);
+                //System.out.println(column);
+            }else{
+                System.out.println(column);
+            }
+        }
     }
 
     public void setFrameNumber(int frames){
@@ -62,5 +76,13 @@ public class FrameFour extends JFrame{
 
     public void close(){
         this.dispose();
+    }
+
+    public void setnewState(int stape){
+        panel.setStape(stape);
+    }
+
+    public void setAll(PrincipaleFour principaleFour) {
+        panel.setAll(principaleFour);
     }
 }

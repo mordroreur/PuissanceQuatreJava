@@ -111,7 +111,7 @@ public class MinMax {
         int profondeur = 7;
         float[] result = simulate(ourTeam, other, ourTeam, T, profondeur, profondeur, turn);
 
-        print(result);
+        //print(result);
 
         float max = result[0];
         int maxI = 0;
