@@ -21,7 +21,7 @@ public class FrameFour extends JFrame{
 		this.setTitle("Connect four");
 		this.setVisible(true);
 		this.setResizable(true);
-        this.setPreferredSize(new Dimension(1300,780));
+        this.setPreferredSize(new Dimension(780,800));
         //this.setDefaultCloseOperation(FrameFour.EXIT_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {

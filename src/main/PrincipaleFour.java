@@ -35,8 +35,8 @@ public class PrincipaleFour {
     public PrincipaleFour(char c){
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
-        this.teams[0] = new Team(0, 255, 0, 0, false);
-        this.teams[1] = new Team(1, 0, 255, 0, false);
+        this.teams[0] = new Team(0, 200, 0, 0, false);
+        this.teams[1] = new Team(1, 255, 215, 0, false);
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
@@ -105,6 +105,8 @@ public class PrincipaleFour {
                     actualPlayer = (actualPlayer+1)%this.nbPlayer;
                     int column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;
                     isWin = ter.addDiscs(column-1, teams[actualPlayer]);
+                    if(!isWin && ter.isFull()) {draw = true; isWin = true;}
+                    if(!isWin && !draw) ter.save("save.txt");
                 }
 
                 framesnb++;
@@ -204,7 +206,7 @@ public class PrincipaleFour {
         System.out.println("Voulez vous jouer contre une IA ? (O/N)");
         String answer = sc.nextLine();
         if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
-            this.teams[1] = new Team(1, 0, 255, 0, true);
+            this.teams[1] = new Team(1, this.teams[1].getColor(), true);
         }
     }
 

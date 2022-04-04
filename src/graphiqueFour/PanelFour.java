@@ -44,7 +44,7 @@ public class PanelFour extends JPanel{
     }
 
     private void drawTer(Graphics g){
-        g.setColor(Color.blue); 
+        g.setColor(Color.black); 
         g.fillRect(0, this.getHeight()/(ter.getHeight()+1), this.getWidth(), this.getHeight());
 
         CellulePuissance cell = ter.getLeftLine();

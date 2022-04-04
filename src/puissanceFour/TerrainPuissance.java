@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
+
 public class TerrainPuissance {
 
     public final int VALUE_FOR_WIN = 4;

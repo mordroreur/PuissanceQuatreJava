@@ -1,4 +1,5 @@
 package puissanceFour;
+import java.awt.Color;
 
 public class Team {
     private ColorFour color;
@@ -13,14 +14,14 @@ public class Team {
         this.CPU = isCpu;
     }
 
-    protected Team(int id, ColorFour color, boolean isCpu)
+    public Team(int id, Color color, boolean isCpu)
     {
         this.id = id;
-        this.color = color;
+        this.color = new ColorFour(color.getRed(), color.getGreen(), color.getBlue());
         this.CPU = isCpu;
     }
 
-    public java.awt.Color getColor() {
+    public Color getColor() {
         return color.getColor();
     }
 
