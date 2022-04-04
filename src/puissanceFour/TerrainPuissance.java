@@ -41,9 +41,8 @@ public class TerrainPuissance {
             File F = new File("save" + System.getProperty("file.separator") + loadFile);
             Scanner sc = new Scanner(F);
             sc.useDelimiter(":|;|\\n");
-            this.sizeX = Integer.parseInt(sc.next());
             this.sizeY = Integer.parseInt(sc.next());
-            System.out.println(sizeX + " " + sizeY);
+            this.sizeX = Integer.parseInt(sc.next());
             sc.next();
             index = new CellulePuissance[this.sizeX];
             CellulePuissance[][] tableau = initCellules(this.sizeX , this.sizeY);
@@ -58,12 +57,11 @@ public class TerrainPuissance {
             while (sc.hasNext())
             {
                 String next = sc.next();
-                if(next.contains("!")) // ISSUE : change to | to make it work on my computer
+                if(next.contains("!"))
                 {
                     i++;
                 }
                 else{
-                    System.out.println(next);
                     this.addDiscs(i, teams[Integer.parseInt(next)]);
                 }
             }
@@ -141,6 +139,18 @@ public class TerrainPuissance {
             return false;
         }else{
             return true;
+        }
+    }
+
+    public int nbrAlign(int column)
+    {
+        CellulePuissance temp = index[column];
+        if (temp.getTeam() != null)
+        {
+            return temp.MaxValueWin();
+        } 
+        else{
+            return temp.getVoisin(SideEnum.DOWN).MaxValueWin();
         }
     }
 

@@ -40,6 +40,7 @@ public class PrincipaleFour {
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
+        actualPlayer = 0;
         this.ter = new TerrainPuissance();
 
         if(consoleMode){
@@ -110,7 +111,7 @@ public class PrincipaleFour {
         int column;
         
         if(!teams[actualPlayer].isACpu()) {column = ask_column();}
-        else {column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;};
+        else {column = MinMax.whereToPlay(teams[actualPlayer], teams[(actualPlayer+1)%this.nbPlayer], ter, turn)+1;};
 
         while(!ter.addConditionalDiscs(column-1, teams[actualPlayer]))
         {
@@ -119,7 +120,7 @@ public class PrincipaleFour {
         }
         isWin = ter.addDiscs(column-1, teams[actualPlayer]);
         if(!isWin && ter.isFull()) {draw = true; isWin = true;}
-        ter.save("save.txt");
+        if(!isWin && !draw) ter.save("save.txt");
     }
 
 

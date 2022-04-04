@@ -38,55 +38,64 @@ public class MinMax {
             TerrainPuissance Tcopy = T.copy();
             if(!T.addConditionalDiscs(i, play) && profondeur == orginalProfondeur)
             {
-                result[i] -= 10;
+                result[i] = -10;
                 continue;
-            }
-            if(turn <= 6 && i == (int)((float)T.getWidth()/2)) result[i] += 4/(turn+1);
-            if(Tcopy.testWin(i, ourTeam, other, 4)){result[i] -= 2;}
-
+            }  
             
-            if(Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, play, 3))
+                
+            if(Tcopy.addConditionalDiscs(i, play) && Tcopy.addDiscs(i, play))
             {
                 if(play == ourTeam)
                 {
-                    result[i]+=0.5;
-                    if(Tcopy.testWin(i, ourTeam, other, 4))
-                    {
-                        result[i]-=2.0;
-                    }
+                    result[i]=(float)5.0;
+                    continue;
                 }
                 else
                 {
-                    result[i]-=1.5;
+                    result[i]=(float)-5.0;
+                    continue;
                 }
-            }else if(play == ourTeam && Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, other, 3))
-            {
-                result[i]+=1.5;
-            }
-                
-            if(play == ourTeam && Tcopy.addConditionalDiscs(i, play) && Tcopy.testWin(i, other)){
-                if(profondeur > 5) System.out.println(i);
-                result[i] = (int)4.0;
-            }
-            else if(Tcopy.addConditionalDiscs(i, play) && Tcopy.addDiscs(i, play))
+            }else if(Tcopy.nbrAlign(i) >= 3)
             {
                 if(play == ourTeam)
                 {
-                    result[i]=(int)5.0;
+                    result[i] = (float)1.5;
                 }
                 else
                 {
-                    result[i]=(int)-2.0;
+                    result[i] = (float)-2.5;
                 }
-            }
-            else{
-                if(ourTeam == play){result[i] += (float)min(simulate(ourTeam, other, other, Tcopy, profondeur-1, orginalProfondeur, 10));}
-                else {result[i] += (float)max(simulate(ourTeam, other, ourTeam, Tcopy, profondeur-1, orginalProfondeur, 10));}
+            }else if(Tcopy.nbrAlign(i) >= 2)
+            {
+                if(play == ourTeam)
+                {
+                    result[i] = (float)1.0;
+                }
+                else
+                {
+                    result[i] = (float)-1.0;
+                }
+            }else if(profondeur == orginalProfondeur && i == (int)((float)T.getWidth()/2)){
+                result[i] = (float)2.0;
+            } 
+            
+            float r;
+            if(ourTeam == play)
+            {
+                r = (float)min(simulate(ourTeam, other, other, Tcopy, profondeur-1, orginalProfondeur, 10));
                 
             }
+            else {
+                r = (float)max(simulate(ourTeam, other, ourTeam, Tcopy, profondeur-1, orginalProfondeur, 10));
+            }
+
+            if(Math.abs(r) > Math.abs(result[i]))
+            {
+                result[i] = r;
+            }
+                
+            
         }   
-
-
         return result;
     }
 
@@ -100,7 +109,8 @@ public class MinMax {
 
     public static int whereToPlay(Team ourTeam, Team other, TerrainPuissance T, int turn)
     {
-        float[] result = simulate(ourTeam, other, ourTeam, T, 7, 7, turn);
+        int profondeur = 7;
+        float[] result = simulate(ourTeam, other, ourTeam, T, profondeur, profondeur, turn);
 
         print(result);
 
