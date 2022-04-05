@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -32,6 +33,8 @@ public class PrincipaleFour {
     private int actualPlayer;
     private boolean draw;
 
+    private final String SAVE_FILE = "save.txt";
+
     public PrincipaleFour(char c){
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
@@ -40,7 +43,7 @@ public class PrincipaleFour {
 
         consoleMode = ('c' == c);
         actualPlayer = (Math.random() < 0.5)? 1 : 0;
-        actualPlayer = 0;
+        //actualPlayer = 0;
         this.ter = new TerrainPuissance();
 
         if(consoleMode){
@@ -58,16 +61,23 @@ public class PrincipaleFour {
     }
 
     public void askLoad(){
-        System.out.println("Voulez vous recharger la dérnière parti ? (O/N)");
-        String answer = sc.nextLine();
-        if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
-            this.ter = new TerrainPuissance("save.txt", this.teams);
-            actualPlayer = this.ter.turnOfWho();
+        File file = new File("save" + System.getProperty("file.separator") + SAVE_FILE);
+        if(file.exists())
+        {
+            System.out.println("Voulez vous recharger la dérnière parti ? (O/N)");
+            String answer = sc.nextLine();
+            if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
+                this.ter = new TerrainPuissance(SAVE_FILE, this.teams);
+                actualPlayer = this.ter.turnOfWho();
+            }
         }
     }
 
     public boolean isWin(){
         if(isWin){
+            File file = new File("save" + System.getProperty("file.separator") + SAVE_FILE);
+            file.delete();
+
             if(!consoleMode){
                 consoleMode = true;
                 frame.close();
@@ -97,16 +107,15 @@ public class PrincipaleFour {
             
             if(System.nanoTime() - lastRenderTime > renderTime) {
                 // drawing a new frame
+                int tmp = (actualPlayer+1)%this.nbPlayer;
                 frame.DrawTer(ter);
                 
-                int tmp = (actualPlayer+1)%this.nbPlayer;
+                
                 if(teams[tmp].isACpu()) {
                     actualPlayer = (actualPlayer+1)%this.nbPlayer;
                     int column = MinMax.whereToPlay(teams[1], teams[0], ter, turn)+1;
                     isWin = ter.addDiscs(column-1, teams[actualPlayer]);
                 }
-                if(!isWin && ter.isFull()) {draw = true; isWin = true;}
-                if(!isWin && !draw) ter.save("save.txt");
                 framesnb++;
                 lastRenderTime += renderTime;
             }else{
@@ -127,6 +136,9 @@ public class PrincipaleFour {
             
         }
         turn++;
+        if(!isWin && ter.isFull()) {draw = true; isWin = true;}
+        if(!isWin && !draw) ter.save(SAVE_FILE);
+        if(isWin && consoleMode) sc.nextLine();
     }
 
     public void nextPlayConsole(){
@@ -146,8 +158,6 @@ public class PrincipaleFour {
             column = ask_column();
         }
         isWin = ter.addDiscs(column-1, teams[actualPlayer]);
-        if(!isWin && ter.isFull()) {draw = true; isWin = true;}
-        if(!isWin && !draw) ter.save("save.txt");
     }
 
 
@@ -156,7 +166,7 @@ public class PrincipaleFour {
         actualPlayer = (actualPlayer+1)%this.nbPlayer;
         if(ter.addConditionalDiscs(column-1)){
             isWin = ter.addDiscs(column-1, teams[actualPlayer]);
-            ter.save("test.txt");
+            //ter.save("test.txt");
         }
     }
 
@@ -205,6 +215,9 @@ public class PrincipaleFour {
         String answer = sc.nextLine();
         if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
             this.teams[1] = new Team(1, this.teams[1].getColor(), true);
+        }
+        else{
+            this.teams[1] = new Team(1, this.teams[1].getColor(), false);
         }
     }
 

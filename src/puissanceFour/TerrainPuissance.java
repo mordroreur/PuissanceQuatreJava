@@ -2,6 +2,12 @@ package puissanceFour;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -217,11 +223,22 @@ public class TerrainPuissance {
     }
 
     public void save(String nameFile) {
+        /*
         try {
             FileWriter file = new FileWriter("save" + System.getProperty("file.separator") + nameFile);//new FileWriter("./../save/" + nameFile);
             file.write(this.sizeY + ":" + this.sizeX + ";\n" + console.draw(index[0]));
             file.close();
         } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }*/
+        try{
+            String txt = this.sizeY + ":" + this.sizeX + ";\n" + console.draw(index[0]);
+            List<String> lines  = Arrays.asList(txt.split("\n"));
+            Path file = Paths.get("save" + System.getProperty("file.separator") + nameFile);
+            Files.write(file, lines, StandardCharsets.UTF_8);
+            }
+        catch (IOException e){
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

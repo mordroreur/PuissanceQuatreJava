@@ -32,14 +32,14 @@ public class PanelFour extends JPanel{
         }
 
 
-
-        if(true) {                //affichage de Frames et ticks a l'ecran
+/*
+        if(false) {                //affichage de Frames et ticks a l'ecran
             g.setFont(new Font("Verdana", 0,this.getHeight()/30));
             g.setColor(Color.red);
             g.drawString(Integer.toString(frameCount), 0, this.getHeight()/30);
             //g.setColor(Color.yellow);
             //g.drawString(Integer.toString(Trame.TicksFin), this.getWidth()-this.getHeight()/20, this.getHeight()/30);
-        }
+        }*/
 
     }
 

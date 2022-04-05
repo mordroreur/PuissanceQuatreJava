@@ -35,8 +35,8 @@ public class Console {
             while(cell != null){
                 if(cell.getTeam() != null)
                 {
-                    String color = (cell.getTeam().getId() == 1) ? ANSI_RED : ANSI_YELLOW;
-                    s += color + " " + ((cell.getTeam().getId() == 1) ? "@" : "$") + " " + ANSI_RESET + "|";
+                    String color = (cell.getTeam().getId() == 1) ? ANSI_YELLOW : ANSI_RED;
+                    s += color + " " + ((cell.getTeam().getId() == 1) ? "£" : "$") + " " + ANSI_RESET + "|";
                 }
                 else
                 {

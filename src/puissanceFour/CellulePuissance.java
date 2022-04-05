@@ -61,7 +61,7 @@ public class CellulePuissance {
 
     protected int verifStraight(int side, Team searchedTeam){
         int value = 0;
-        if(this.team == searchedTeam){
+        if(this.team != null && searchedTeam != null && this.team.getId() == searchedTeam.getId()){
             if(this.nextCases[side] != null){
                 value = nextCases[side].verifStraight(side, team);
             }
@@ -72,7 +72,7 @@ public class CellulePuissance {
 
     protected int verifDiagonal(int side1, int side2, Team searchedTeam){
         int value = 0;
-        if(this.team == searchedTeam){
+        if(this.team != null && searchedTeam != null && team.getId() == searchedTeam.getId()){
             if(this.nextCases[side1] != null && this.nextCases[side1].nextCases[side2] != null){
                 value = nextCases[side1].nextCases[side2].verifDiagonal(side1, side2, team);
             }
