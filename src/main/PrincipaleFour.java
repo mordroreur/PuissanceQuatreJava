@@ -96,6 +96,7 @@ public class PrincipaleFour {
 
     public void forceEnd(){
         isWin = true;
+        draw = true;
         actualPlayer = -1;
     }
 
