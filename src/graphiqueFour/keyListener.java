@@ -23,6 +23,8 @@ public class keyListener implements KeyListener{
         if(key.getKeyCode() == 27){
             game.forceEnd();
         }else{
+
+            /*
             switch(key.getKeyChar()){
                 case('&') : game.PlaceGraphics(1); break;
                 case('1') : game.PlaceGraphics(1); break;
@@ -39,6 +41,7 @@ public class keyListener implements KeyListener{
                 case('è') : game.PlaceGraphics(7); break;
                 case('7') : game.PlaceGraphics(7); break; 
             }
+            */
         }
         
     }
