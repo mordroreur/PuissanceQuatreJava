@@ -36,6 +36,7 @@ public class PrincipaleFour {
     private final String SAVE_FILE = "save.txt";
 
     public PrincipaleFour(char c){
+        sc = new Scanner(System.in);
         this.nbPlayer = 2;
         this.teams = new Team[this.nbPlayer];
         this.teams[0] = new Team(0, 200, 0, 0, false);
@@ -85,7 +86,7 @@ public class PrincipaleFour {
 
             System.out.println(ter);
             if(!draw)    
-                System.out.println("Victoire du joueur " + (actualPlayer + 1) + "!!!");
+                System.out.println("Victoire de " + this.teams[actualPlayer] + "!!!");
             else
                 System.out.println("Egalite !");
         }
@@ -146,8 +147,7 @@ public class PrincipaleFour {
         actualPlayer = (actualPlayer+1)%this.nbPlayer;
         
         System.out.println(ter);
-        if(!teams[actualPlayer].isACpu())System.out.println("C'est au joueur " + (actualPlayer+1) + " de jouer.\nOu veux-tu jouer ?[1, 7]");
-        else System.out.println("L'ordinateur joue :");
+        System.out.println("C'est a " + this.teams[actualPlayer] + " de jouer.\nOu veux-tu jouer ?[1, 7]");
         int column;
         
         if(!teams[actualPlayer].isACpu()) {column = ask_column();}
@@ -178,6 +178,14 @@ public class PrincipaleFour {
             return column;
         }catch (InputMismatchException e){sc.nextLine(); return -1;}
         
+    }
+
+    public void askName(int joueur){
+        try{
+            System.out.println("Entrer le nom du joueur " + joueur);
+            String name = sc.nextLine();
+            this.teams[joueur-1].setName(name);
+        }catch (InputMismatchException e){this.teams[joueur-1].setName("");}
     }
 
     public void close(){
@@ -211,15 +219,18 @@ public class PrincipaleFour {
         return (answer.equals("O") || answer.equals("o") || answer.equals("0"));
     }
 
-    public void askSetComputer() {
+    public boolean askSetComputer() {
         System.out.println("Voulez vous jouer contre une IA ? (O/N)");
         String answer = sc.nextLine();
         if(answer.equals("O") || answer.equals("o") || answer.equals("0")){
             this.teams[1] = new Team(1, this.teams[1].getColor(), true);
+            this.teams[1].setName("l'ordinateur");
+            return true;
         }
-        else{
+        else if (this.teams[1].isACpu()){
             this.teams[1] = new Team(1, this.teams[1].getColor(), false);
         }
+        return false;
     }
 
     public void resetTerrain() {

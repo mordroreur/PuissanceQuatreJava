@@ -10,7 +10,9 @@ public class Main {
         Game.askLoad();
 
         while(!wantToStop){
-            Game.askSetComputer();
+            boolean cpu = Game.askSetComputer();
+            Game.askName(1);
+            if(!cpu)Game.askName(2);
             Game.askChangeMode();
             
             while(!Game.isWin()){

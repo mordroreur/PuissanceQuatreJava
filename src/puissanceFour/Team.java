@@ -5,6 +5,7 @@ public class Team {
     private ColorFour color;
     private int id;
     private boolean CPU;
+    private String name;
 
 
     public Team(int id, float red, float green, float blue, boolean isCpu) 
@@ -21,12 +22,22 @@ public class Team {
         this.CPU = isCpu;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
     public Color getColor() {
         return color.getColor();
     }
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public boolean isACpu() {return this.CPU;}
